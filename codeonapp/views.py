@@ -93,3 +93,22 @@ def edit_profile(request):
             
     return render(request,'editProfile.html',{"form":form})                             
   
+# rating function
+
+@login_required(login_url='/accounts/login/')
+def grade_rating(request,id):
+     current_user=request.user
+     project=Projects.objects.get(id=id)
+     if request.method == 'POST':
+        form = NewRatingForm(request.POST, request.FILES)
+        if form.is_valid():
+            grade = form.save(commit=False)
+            grade.user = current_user
+            grade.project=project
+            grade.total=int(form.cleaned_data['design'])+int(form.cleaned_data['content'])+int(form.cleaned_data['usability'])
+            grade.avg= int(grade.total)/3
+            grade.save()
+        return redirect('welcome')
+     else:
+        form = NewRatingForm()
+     return render(request, 'rating.html', {"form": form, 'project':project})  
