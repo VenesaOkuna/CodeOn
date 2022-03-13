@@ -1,3 +1,4 @@
+from email.mime import image
 from django.db import models
 import datetime as dt
 from django.contrib.auth.models import User
@@ -81,4 +82,29 @@ class Rating(models.Model):
         self.update()
 
     def delete_rating(self):
+        self.delete()    
+
+class Merch(models.Model):
+    name = models.CharField(max_length=60)
+    merch = CloudinaryField("image")
+    description = models.TextField()
+    price = models.DecimalField(decimal_places=2, max_digits=20)   
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+        else:
+            return "/static/images/default-profile.jpg"
+
+    def save_merch(self):
+        self.save()
+        
+    def update_merch(self):
+        self.update()
+
+    def delete_merch(self):
         self.delete()    
