@@ -44,3 +44,24 @@ def add_site(request):
     else:
         form = NewProjectsForm()
     return render(request, 'create_site.html', {"form": form})
+
+#  profile function
+
+@login_required(login_url='/accounts/login/')
+def profile(request, profile_id):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.username = current_user
+            profile.save()
+            return redirect('welcome')
+
+    else:
+        form = NewProfileForm()
+    username=User.objects.all()    
+    myProfile = Profile.objects.filter(username = current_user)
+    projects = Projects.objects.filter(poster = current_user)    
+    
+    return render(request, 'profile.html', {"form": form, "username": username,"myProfile": myProfile, "projects":projects}) 
