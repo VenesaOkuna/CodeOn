@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'codeonapp',
+    'bootstrap4',
+    'tinymce',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
