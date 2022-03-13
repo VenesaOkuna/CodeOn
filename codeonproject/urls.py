@@ -16,18 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from django.conf import settings
-
+from django.contrib.auth import views
+from . import settings
 
 
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
-   
-    # code on app
-    path('', include(('codeonapp.urls'), namespace='codeon')),
+    # Other URL patterns ...
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    # Logout
+    path('logout/', views.logout, {"next_page": '/'}), 
+    # Code on app
+    path('', include('codeonapp.urls')),
+    #tinymce
+    path('tinymce/', include('tinymce.urls')),
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

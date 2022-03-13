@@ -20,12 +20,12 @@ from django.conf import settings
 
 
 urlpatterns = [
-    # Admin
-    path('admin/', admin.site.urls),
-    # Users
-    path('users/', include(('users.urls', 'users'), namespace='users')),    
-    # Posts
-    path('', include(('posts.urls', 'posts'), namespace='posts')),
+    # # Admin
+    # path('admin/', admin.site.urls),
+    # # Users
+    # path('users/', include(('users.urls', 'users'), namespace='users')),    
+    # # Posts
+    # path('', include(('posts.urls', 'posts'), namespace='posts')),
 
 ]
 

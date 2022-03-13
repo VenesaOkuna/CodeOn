@@ -38,7 +38,7 @@ class Projects (models.Model):
     title = models.CharField(max_length =40)
     image = CloudinaryField('image')
     description =  HTMLField()
-    profile = models.ForeignKey(Profile,null = True)
+    profile = models.ForeignKey('profile',on_delete=models.CASCADE, null=True)
     poster = models.ForeignKey(User,on_delete=models.CASCADE , null=True) 
     post_date=models.DateTimeField(auto_now_add=True)
     link = models.CharField(max_length =200)
@@ -62,8 +62,8 @@ class Projects (models.Model):
     
 
 class Rating(models.Model):
-    profile = models.ForeignKey(Profile,null = True)
-    project = models.ForeignKey(Projects,null = True)
+    profile = models.ForeignKey('profile',on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey('project',on_delete=models.CASCADE, null=True)
     design =  models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0, null = True)
     usability = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0,null = True)
     content = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0,null = True)
