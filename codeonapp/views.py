@@ -117,7 +117,7 @@ def grade_rating(request,id):
         form = NewRatingForm()
      return render(request, 'rating.html', {"form": form, 'project':project})  
 
-
+# serialize projects model
 class ProjectsList(APIView):
     def get(self, request, format=None):
         all_merch = Projects.objects.all()
@@ -130,3 +130,17 @@ class ProjectsList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+# serialize profile model
+class ProfileList(APIView):
+    def get(self, request, format=None):
+        all_merch = Profile.objects.all()
+        serializers = ProfileSerializer(all_merch, many=True)
+        return Response(serializers.data)     
+    
+    def post(self, request, format=None):
+        serializers = ProfileSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)  
