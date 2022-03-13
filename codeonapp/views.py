@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http  import HttpResponse
 from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import Projects, Profile, Rating, User
 from .forms import NewProjectsForm, NewProfileForm,NewRatingForm
+from .serializer import ProjectsSerializer, ProfileSerializer
+from rest_framework import status
 
 
 
@@ -112,3 +116,17 @@ def grade_rating(request,id):
      else:
         form = NewRatingForm()
      return render(request, 'rating.html', {"form": form, 'project':project})  
+
+
+class ProjectsList(APIView):
+    def get(self, request, format=None):
+        all_merch = Projects.objects.all()
+        serializers = ProjectsSerializer(all_merch, many=True)
+        return Response(serializers.data)  
+    
+    def post(self, request, format=None):
+        serializers = ProjectsSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)   
