@@ -16,18 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from django.contrib.auth import views
+from django_registration.backends.one_step.views import RegistrationView
 from . import settings
+
+from codeonapp.forms import NewProfileForm
 
 
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     # Other URL patterns ...
+    path('accounts/profile/', RegistrationView.as_view(success_url='/', form_class=NewProfileForm), name='profile'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    # Logout
-    path('logout/', views.logout, {"next_page": '/'}), 
+
     # Code on app
     path('', include('codeonapp.urls')),
     #tinymce

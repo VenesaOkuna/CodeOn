@@ -19,4 +19,5 @@ class NewRatingForm(forms.ModelForm):
 class NewMerchForm(forms.ModelForm):
     class Meta:
         model = Merch
+        exclude = ['post_date']
                

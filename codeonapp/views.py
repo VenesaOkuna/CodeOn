@@ -117,7 +117,7 @@ def grade_rating(request,id):
         form = NewRatingForm()
      return render(request, 'rating.html', {"form": form, 'project':project})  
 
-# serialize projects model
+# serialize projects model objects
 class ProjectsList(APIView):
     def get(self, request, format=None):
         all_merch = Projects.objects.all()
