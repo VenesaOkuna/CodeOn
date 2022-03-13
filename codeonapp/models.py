@@ -59,3 +59,26 @@ class Projects (models.Model):
         titles = cls.objects.filter(title__icontains=search_term)
         return titles  
     
+
+class Rating(models.Model):
+    profile = models.ForeignKey(Profile,null = True)
+    project = models.ForeignKey(Projects,null = True)
+    design =  models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0, null = True)
+    usability = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0,null = True)
+    content = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0,null = True)
+    user= models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+    total=models.IntegerField(null = True)
+    avg=models.IntegerField(null=True)
+    
+    
+    def __str__(self):
+        return self.content
+    
+    def save_rating(self):
+        self.save()
+        
+    def update_rating(self):
+        self.update()
+
+    def delete_rating(self):
+        self.delete()    
