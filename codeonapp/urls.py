@@ -1,4 +1,4 @@
-"""codeonproject URL Configuration
+"""instaclan URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -19,15 +19,15 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
-   
-    # code on app
-    path('', include(('codeonapp.urls'), namespace='codeon')),
+    # Users
+    path('users/', include(('users.urls', 'users'), namespace='users')),    
+    # Posts
+    path('', include(('posts.urls', 'posts'), namespace='posts')),
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
